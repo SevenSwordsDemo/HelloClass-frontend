@@ -7,13 +7,22 @@
 			<TextInput 
 				v-for="item in inputItems"
 				:label="item.label"
-				:placeholder="item.placeholder"/>
-			<div class="UseTime">
-				<span>使用时间：</span>
+				:placeholder="item.placeholder"
+				:fontsize="fontsize"
+				:marginbottom="marginbottom"/>
+			<div 
+				class="UseTime"
+				:style="{top: UseTimeTop + 'px'}">
+				<span
+					:style="{fontSize: fontsize + 'px'}">
+					使用时间：
+				</span>
 				<el-select
-					v-for="items in selectItems"
+					v-for="items,index in selectItems"
 					v-model="value"
-					class="selects"
+					:class="[defineStyle(index) ? 'selects ClassTime' : 'selects']"
+					:style="{marginRight: marginright + 'px'}"
+					:key="index"
 					placeholder="请选择">
 					<el-option
 					v-for="item in items"
@@ -23,8 +32,13 @@
 					</el-option>
 				</el-select>
 			</div>
-			<div class="ApplyReason">
-				<span>申请原因:</span>
+			<div 
+				class="ApplyReason"
+				:style="{top: ApplyTop + 'px'}">
+				<span
+					:style="{fontSize: fontsize + 'px'}">
+					申请原因:
+				</span>
 				<el-input
 					v-model="textarea"
 					class="ReasonText"
@@ -33,7 +47,9 @@
 					
 				</el-input>
 			</div>
-			<el-button class="submitButton">
+			<el-button 
+				class="submitButton"
+				:style="buttonStyle">
 				提交
 			</el-button>
 		</div>
@@ -52,6 +68,7 @@ export default {
 	},
 	props: {
 		pageName: String,
+		ParentW: Number,
 		ParentH: Number
 	},
 	data () {
@@ -139,8 +156,84 @@ export default {
 						value: "选项四",
 						label: "第4节课"
 					},
+				],
+				[
+					{
+						value: "选项一",
+						label: "第1节课"
+					},
+					{
+						value: "选项二",
+						label: "第2节课"
+					},
+					{
+						value: "选项一三",
+						label: "第3节课"
+					},
+					{
+						value: "选项四",
+						label: "第4节课"
+					},
 				]
 			]
+		}
+	},
+	methods: {
+		defineStyle (index) {
+			if(index < 2)
+				return false;
+			else
+				return true;
+		}
+	},
+	computed: {
+		fontsize () {
+			if(this.ParentW < 700)
+				return 12;
+			else
+				return 25;
+		},
+		marginright () {
+			if(this.ParentW < 700)
+				return 15;
+			else 
+				return 40;
+		},
+		marginbottom () {
+			if(this.ParentW < 700)
+				return 10;
+			else
+				return 50;
+		},
+		UseTimeTop () {
+			if(this.ParentW < 700)
+				return 20;
+			else
+				return 50;
+		},
+		ApplyTop () {
+			if(this.ParentW < 700)
+				return 80;
+			else
+				return 100;
+		},
+		buttonStyle () {
+			if(this.ParentW < 700){
+				return {
+					height: '40px',
+					width: '100px',
+					fontSize: '20px',
+					top: '160px',
+				}
+			}
+			else{
+				return {
+					height: '80px',
+					width: '250px',
+					fontSize: '40px',
+					top: '250px',
+				}
+			}
 		}
 	}
 }
@@ -158,25 +251,22 @@ export default {
 		.UseTime {
 			position: relative;
 			width: 80%;
-			top: 50px;
 			left: 20%;
-			span {
-				font-size: 25px;
-			}
 			.selects {
-				width: 24%;
+				width: 30%;
 				left: 3%;
-				margin-right: 10px;
+			}
+			.ClassTime {
+				left: 25%;
+				top: 20px;
 			}
 		}
 		.ApplyReason {
 			position: relative;
 			width: 80%;
 			left: 20%;
-			top: 100px;	
 			span {
 				display: inline-block;
-				font-size: 25px;
 			}
 			.ReasonText {
 				position: absolute;

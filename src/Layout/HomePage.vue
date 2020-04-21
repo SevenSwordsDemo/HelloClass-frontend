@@ -17,7 +17,8 @@
 			:ParentH="HomePageH"
 			:pageName="ClassInfoName"
 			:tableInfo="ClassTableInfo"
-			:buildingInfo="BuildingInfo"/>
+			:buildingInfo="BuildingInfo"
+			:ifClass="ifClassInfo"/>
 		<!-- 任课信息查询 -->
 		<InfoPage 
 			v-if="ifCourseInfo"
@@ -25,7 +26,8 @@
 			:ParentH="HomePageH"
 			:pageName="CourseInfoName"
 			:tableInfo="CourseTableInfo"
-			:buildingInfo="BuildingInfo"/>
+			:buildingInfo="BuildingInfo"
+			:ifClass="ifClassInfo"/>
 		<!-- 签到记录查询 -->
 		<AtdRecordPage 
 			v-if="ifRecord"
@@ -38,6 +40,7 @@
 		<ApplyRoomPage 
 			v-if="ifApply"
 			:pageName="ApplyRoomName"
+			:ParentW="HomePageW"
 			:ParentH="HomePageH"/>
 		<!-- 侧边栏 -->
 		<SidePage 
@@ -226,6 +229,7 @@ export default {
 		handleSideBar (ifclicked) {
 			this.ifSide = ifclicked;
 			this.ifArray[1] = ifclicked;
+			this.postTest();
 		},
 		//点击侧边栏内导航按钮时
 		//检查所有页面状态，并将传入的index对应页面状态修改,
@@ -249,7 +253,24 @@ export default {
 		//获取点击页面的索引
 		getPageIndex (index) {
 			this.checkPageState(index);
-		}
+		},
+		//传送数据测试
+		postTest () {
+			this.$axios.request({
+				methods: 'post',
+				url: 'http://localhost:8080/loginCheck',
+				data: {
+					username: '',
+					password: '',
+					role: ''
+				}
+			})
+			.then((item) => {
+				console.log("test");
+			}
+			)
+		},
+		
 	},
 	mounted () {
 		this.handOutPageState();

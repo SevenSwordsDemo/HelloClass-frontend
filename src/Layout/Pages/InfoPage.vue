@@ -14,12 +14,29 @@
 				<span>请选择教学楼：</span>
 				<el-select
 					v-model="value"
-					placeholder="请选择">
+					placeholder="请选择"
+					change="returnData">
 					<el-option
-					v-for="item in options"
-					:key="item.value"
-					:label="item.label"
-					:value="item.value">
+						v-for="item in buildings"
+						:key="item.value"
+						:label="item.label"
+						:value="item.value">
+					</el-option>
+				</el-select>
+			</div>
+			<div
+				v-if="ifClass"
+				class="selectBuilding">
+				<span>请选择周数：</span>
+				<el-select
+					v-model="value"
+					placeholder="请选择"
+					change="returnData">
+					<el-option
+						v-for="item in weeks"
+						:key="item.value"
+						:label="item.label"
+						:value="item.value">
 					</el-option>
 				</el-select>
 			</div>
@@ -46,14 +63,36 @@ export default {
 		ParentH: Number,
 		pageName: String,
 		tableInfo: Array,
-		buildingInfo: Array
+		buildingInfo: Array,
+		ifClass: Boolean
 	},
 	data () {
 		return {
 			heightRate: 0.883,
-			options: this.buildingInfo,
+			buildings: this.buildingInfo,
+			weeks: [
+				{
+					value: 1,
+					label: '第一周'
+				},
+				{
+					value: 2,
+					label: '第二周'
+				},
+				{
+					value: 3,
+					label: '第三周'
+				},
+				{
+					value: 4,
+					label: '第一周'
+				}
+			],
 			value: '',
 			contentHeight: 0,
+			//传入后台参数
+			week: 0, //周次
+			theday: 0 //星期几
 		}
 	},
 	computed: {
@@ -99,6 +138,9 @@ export default {
 				}
 			})
 			return array;
+		},
+		returnData () {
+			console.log("test");
 		}
 	},
 	mounted () {

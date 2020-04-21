@@ -4,7 +4,6 @@
 			<span>七剑下天山</span>
 		</div>
 		<el-menu
-		  default-active="2"
 		  class="el-menu"
 		  @open="handleOpen"
 		  @close="handleClose"

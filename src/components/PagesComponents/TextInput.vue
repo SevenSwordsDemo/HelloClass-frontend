@@ -1,6 +1,11 @@
 <template>
-	<div id="TextInput">
-		<span>{{label}}:</span>
+	<div 
+		id="TextInput"
+		:style="{marginBottom: marginbottom + 'px'}">
+		<span
+			:style="{fontSize: fontsize + 'px'}">
+			{{label}}:
+		</span>
 		<el-input
 			class="Input"
 			v-model="input">
@@ -14,7 +19,9 @@ export default {
 	name: 'TextInput',
 	props: {
 		label: String,
-		placeholder: String
+		placeholder: String,
+		fontsize: Number,
+		marginbottom: Number
 	},
 	data () {
 		return {
@@ -22,7 +29,7 @@ export default {
 			//等待注入数据
 			options: []
 		}
-	}
+	},
 }
 </script>
 
@@ -37,7 +44,6 @@ export default {
 	span {
 		display: inline-block;
 		height: 100%;
-		font-size: 25px;
 		line-height: 40px;
 	}
 	.Input {

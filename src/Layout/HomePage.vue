@@ -57,6 +57,7 @@ import SidePage from './Pages/SidePage.vue'
 import InfoPage from './Pages/InfoPage.vue'
 import AtdRecordPage from './Pages/AtdRecordPage.vue'
 import ApplyRoomPage from './Pages/ApplyRoomPage.vue'
+import {postCourseInfo} from '../api/infoAPI.js'
 
 export default {
 	name: 'HomePage',
@@ -185,23 +186,23 @@ export default {
 			],
 			BuildingInfo: [
 				{
-					value: '选项1',
+					value: '健行',
 					label: '健行楼'
 				}, 
 				{
-					value: '选项2',
+					value: '广知',
 					label: '广知楼'
 				}, 
 				{
-					value: '选项3',
+					value: '博易',
 					label: '博易楼'
 				}, 
 				{
-					value: '选项4',
+					value: '郁文',
 					label: '郁文楼'
 				}, 
 				{
-					value: '选项5',
+					value: '语林',
 					label: '语林楼'
 				}
 			],
@@ -255,25 +256,33 @@ export default {
 			this.checkPageState(index);
 		},
 		//传送数据测试
+		// postTest () {
+		// 	this.$axios.request({
+		// 		method: 'post',
+		// 		url: '/api/student/apply',
+		// 		data: {
+		// 			sid: "1",
+		// 			classroom: "健b",
+		// 			start: 1,
+		// 			end : 2,
+		// 			state: "待审核",
+		// 			reason: "xxxx",
+		// 			applyTime: "2020-04-23 13:52:00",
+		// 			dayOfWeek: "Monday",
+		// 			date: "2020-04-23",
+		// 			week: 3
+		// 		}
+		// 	}).then(body => {
+		// 		console.log(body.data)
+		// 	})
+		// },
 		postTest () {
-			this.$axios.request({
-				methods: 'post',
-				url: 'http://localhost:8080/loginCheck',
-				data: {
-					username: '',
-					password: '',
-					role: ''
-				}
-			})
-			.then((item) => {
-				console.log("test");
-			}
-			)
-		},
-		
+			postCourseInfo();
+		},	
 	},
 	mounted () {
 		this.handOutPageState();
+		console.log(this.$route.params.data);
 	}
 }
 </script>

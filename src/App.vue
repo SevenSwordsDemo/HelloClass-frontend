@@ -1,20 +1,27 @@
 <template>
   <div id="app" :style="{width: screenWidth + 'px',
 						height: screenHeight + 'px'}">
-	  <HomePage :HomePageW="screenWidth"
+		<router-view
+			:HomePageW="screenWidth"
+			:HomePageH="screenHeight">
+			
+		</router-view>
+		<!-- <HomePage :HomePageW="screenWidth"
 				:HomePageH="screenHeight" 
 				:isStudent="isStudent"
-				:userName="userName"/>
+				:userName="userName"/> -->
   </div>
 </template>
 
 <script>
 import HomePage from './Layout/HomePage.vue'
+import Login from './Layout/Login.vue'
 
 export default {
 	name: 'app',
 	components: {
-	  HomePage
+	  HomePage,
+	  Login
 	},
 	data () {
 	  return {

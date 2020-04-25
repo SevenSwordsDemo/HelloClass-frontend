@@ -9,13 +9,16 @@
 			class="PagesContent"
 			:style="ifOverflow">
 			<ButtonGroup 
-				:ParentH="ParentH"/>
-			<div class="selectBuilding">
+				:ParentH="ParentH"
+				@getTheday="getTheday"/>
+			<div 
+				v-if="ifClass"
+				class="selectBuilding">
 				<span>请选择教学楼：</span>
 				<el-select
-					v-model="value"
+					v-model="buildingvalue"
 					placeholder="请选择"
-					change="returnData">
+					@change="getBuilding">
 					<el-option
 						v-for="item in buildings"
 						:key="item.value"
@@ -29,9 +32,9 @@
 				class="selectBuilding">
 				<span>请选择周数：</span>
 				<el-select
-					v-model="value"
+					v-model="weekvalue"
 					placeholder="请选择"
-					change="returnData">
+					@change="getWeek">
 					<el-option
 						v-for="item in weeks"
 						:key="item.value"
@@ -50,6 +53,7 @@
 import PagesHeader from '../../components/PagesComponents/PagesHeader.vue'	
 import ButtonGroup from '../../components/PagesComponents/ButtonGroup.vue'
 import InfoTable from '../../components/PagesComponents/InfoTable.vue'
+import {postClassInfo, dataTranslate} from '../../api/infoAPI.js'
 
 export default {
 	name: 'InfoPage',
@@ -88,11 +92,13 @@ export default {
 					label: '第一周'
 				}
 			],
-			value: '',
 			contentHeight: 0,
+			buildingvalue: '',
+			weekvalue: '',
 			//传入后台参数
 			week: 0, //周次
-			theday: 0 //星期几
+			theday: 0,//星期几
+			build: ''//楼名
 		}
 	},
 	computed: {
@@ -105,7 +111,7 @@ export default {
 			}
 		},
 		translatedData () {
-			return this.dataTranslate(this.tableInfo);
+			return dataTranslate(this.tableInfo);
 		}
 	},
 	methods: {
@@ -113,34 +119,22 @@ export default {
 			var content = document.querySelector("div[class='PagesContent']");
 			this.contentHeight = content.offsetHeight;
 		},
-		dataTranslate (Arr) {
-			let array = JSON.parse(JSON.stringify(Arr));
-			array.forEach((item,index) => {
-				for(var i in item) {
-					var Type =  typeof item[i];
-					if(Type === "number") {
-						if(i === "classTime")
-							item[i] = "第" + item[i] + "节课";
-						else if(i === "studentNumber")
-							item[i] = item[i] + "名学生";
-					}
-					else if(Type === "boolean") {
-						if(item[i] === true) {
-							array[index][i] = "已预约";
-						}
-						else {
-							array[index][i] = "未预约";
-						}
-					}
-					else {
-						array[index][i] = item[i];
-					}
-				}
-			})
-			return array;
+		//获取楼名返回值
+		getBuilding (val) {
+			this.build = val;
+		},
+		//获取周次返回值
+		getWeek (val) {
+			this.week = val;
+			this.returnData();
+		},
+		//获取星期
+		getTheday (theday) {
+			this.theday = theday;
+			this.returnData();
 		},
 		returnData () {
-			console.log("test");
+			postClassInfo(this.week, this.theday);
 		}
 	},
 	mounted () {

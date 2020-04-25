@@ -8,6 +8,7 @@
 				height: ParentH * 0.06 + 'px'}"
 			:label="item.label"
 			:index="item.index"
+			:value="item.value"
 			:ifClicked="item.ifClicked"
 			@getButtonIndex="getButtonIndex"/>
 	</div>
@@ -31,37 +32,44 @@ export default {
 				{
 					label: '周一',
 					ifClicked: '',
-					index: 1
+					index: 1,
+					value: 'Monday'
 				},
 				{
 					label: '周二',
 					ifClicked: '',
-					index: 2
+					index: 2,
+					value: 'Tuesday'
 				},
 				{
 					label: '周三',
 					ifClicked: '',
-					index: 3
+					index: 3,
+					value: 'Wedneday'
 				},
 				{
 					label: '周四',
 					ifClicked: '',
-					index: 4
+					index: 4,
+					value: 'Thursday'
 				},
 				{
 					label: '周五',
 					ifClicked: '',
-					index: 5
+					index: 5,
+					value:'Friday'
 				},
 				{
 					label: '周六',
 					ifClicked: '',
-					index: 6
+					index: 6,
+					value: 'Saturday'
 				},
 				{
 					label: '周日',
 					ifClicked: '',
-					index: 7
+					index: 7,
+					value: 'Sunday'
 				},
 			]
 		}
@@ -76,7 +84,6 @@ export default {
 				this.buttonStates[i] = false;
 			}
 			this.buttonStates[index] = true;
-			console.log(index, this.buttonStates, this.buttonGroup);
 			this.handOutButtonState();
 		},
 		//分发按钮状态
@@ -85,9 +92,13 @@ export default {
 				this.buttonGroup[i].ifClicked = this.buttonStates[i];
 			}
 		},
-		//获得点击按钮索引
-		getButtonIndex (index) {
+		//获得点击按钮索引、值
+		getButtonIndex (index, value) {
 			this.checkButtonState(index);
+			this.returnTheday(value);
+		},
+		returnTheday (value) {
+			this.$emit('getTheday', value);
 		}
 	},
 	mounted () {

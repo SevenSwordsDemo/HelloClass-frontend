@@ -15,15 +15,12 @@ export default {
 	props: {
 		label: String,
 		ifClicked: Boolean,
-		index: Number
-	},
-	data () {
-		return {
-		}
+		index: Number,
+		value: String
 	},
 	methods: {
 		handleWeekClicked () {
-			this.$emit('getButtonIndex', this.index - 1);
+			this.$emit('getButtonIndex', this.index - 1, this.value);
 		}
 	},
 	computed: {

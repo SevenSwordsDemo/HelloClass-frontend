@@ -103,6 +103,8 @@ export default{
 					params: {
 						username: res.data.name,
 						role: this.loginform.role,
+						tno: res.data.tno,
+						sno: res.data.sno,
 						HomePageW: this.HomePageW,
 						HomePageH: this.HomePageH
 					}

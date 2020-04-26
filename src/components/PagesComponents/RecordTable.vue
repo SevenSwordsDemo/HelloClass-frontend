@@ -8,7 +8,8 @@
 			</span>
 			<el-select 
 				v-model="value"
-				placeholder="请选择">
+				placeholder="请选择"
+				@change="getWeek">
 				<el-option
 					v-for="item in options"
 					:key="item.value"
@@ -19,7 +20,8 @@
 		</div>
 		<div id="tableSign">
 			<AtdRecord
-				v-for="record,index in records"
+				v-for="record in records"
+				:key="record.courseName"
 				:students="Students"
 				:Items="record"
 				@handleExtend="handleExtend"/>
@@ -37,40 +39,29 @@ export default {
 	},
 	props: {
 		Students: Array,
-		Records: Array
+		Records: Array,
+		getWeek: Function
 	},
 	data () {
 		return {
 			value: '',
 			options: [
 				{
-					value: "选项一",
-					label: "周一"
+					value: 1,
+					label: "第一周"
 				},
 				{
-					value: "选项二",
-					label: "周二"
+					value: 2,
+					label: "第二周"
 				},
 				{
-					value: "选项三",
-					label: "周三"
+					value: 3,
+					label: "第三周"
 				},
 				{
-					value: "选项四",
-					label: "周四"
-				},
-				{
-					value: "选项五",
-					label: "周五"
-				},
-				{
-					value: "选项六",
-					label: "周六"
-				},
-				{
-					value: "选项七",
-					label: "周日"
-				},
+					value: 4,
+					label: "第四周"
+				}
 			],
 			records: this.Records,
 			signHeight: 0

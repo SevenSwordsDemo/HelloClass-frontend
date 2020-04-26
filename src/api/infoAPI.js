@@ -1,20 +1,57 @@
 import service from '../utils/request.js'
+import qs from 'qs'
 
 /**
-* 请求数据
+* 请求任课数据
 */
-export function postCourseInfo () {
-	service.request({
+export function postCourseInfo (tno, theday) {
+	return service.request({
+		headers: {
+			// 'Content-Type': 'application/json;charset=UTF-8;'
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		transformRequest: [function(data){
+			// data = JSON.stringify(data)
+			data = qs.stringify(data);
+			console.log(data);
+			return data
+		}],
 		method: 'post',
-			url: '/api/teacher/teachCourses',
-			data: {
-				tno : "t123456",
-				theday : "Monday"
-			}
-		}).then(body => {
-			console.log(body.data)
+		url: '/api/teacher/teachCourses',
+		data: {
+			tno: tno,
+			theday: theday
+		}
+	}).then(body => {
+		console.log(body.data)
 	})
 }
+
+/**
+ * 请求教室数据  
+ */
+export function postClassInfo(week, theday) {
+	return service.request({
+		headers: {
+			// 'Content-Type': 'application/json;charset=UTF-8;'
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		transformRequest: [function(data){
+			// data = JSON.stringify(data)
+			data = qs.stringify(data);
+			return data
+		}],
+		method: 'post',
+		url: '/api/teacher/theDayPlans',
+		data: {
+			week : week,
+			theday : theday
+		}
+	}).then(body => {
+		console.log(body.data)
+	})
+}
+
 /**
  * 转换数据
  */

@@ -53,7 +53,7 @@
 import PagesHeader from '../../components/PagesComponents/PagesHeader.vue'	
 import ButtonGroup from '../../components/PagesComponents/ButtonGroup.vue'
 import InfoTable from '../../components/PagesComponents/InfoTable.vue'
-import {postClassInfo, dataTranslate} from '../../api/infoAPI.js'
+import {postClassInfo, postCourseInfo, dataTranslate} from '../../api/infoAPI.js'
 
 export default {
 	name: 'InfoPage',
@@ -68,10 +68,11 @@ export default {
 		pageName: String,
 		tableInfo: Array,
 		buildingInfo: Array,
-		ifClass: Boolean
+		ifClass: Boolean,
 	},
 	data () {
 		return {
+			tno: '',
 			heightRate: 0.883,
 			buildings: this.buildingInfo,
 			weeks: [
@@ -103,12 +104,10 @@ export default {
 	},
 	computed: {
 		ifOverflow () {
-			if(this.tableInfo.length < 13){
+			if(this.tableInfo.length < 13)
 				return {height: '710px'};
-			}
-			else{
+			else
 				return {};
-			}
 		},
 		translatedData () {
 			return dataTranslate(this.tableInfo);
@@ -120,25 +119,35 @@ export default {
 			this.contentHeight = content.offsetHeight;
 		},
 		//获取楼名返回值
-		getBuilding (val) {
-			this.build = val;
+		getBuilding (build) {
+			this.build = build;
 		},
 		//获取周次返回值
-		getWeek (val) {
-			this.week = val;
-			this.returnData();
+		getWeek (week) {
+			this.week = week;
+			this.returnClassData();
 		},
 		//获取星期
 		getTheday (theday) {
 			this.theday = theday;
-			this.returnData();
+			if(this.ifClass)
+				this.returnClassData();
+			else
+				this.returnCourseData();
 		},
-		returnData () {
+		//返回教室信息
+		returnClassData () {
 			postClassInfo(this.week, this.theday);
+		},
+		//返回任课信息
+		returnCourseData () {
+			postCourseInfo(this.tno, this.theday);
 		}
 	},
 	mounted () {
 		this.getContentHeight();
+		this.tno = this.$route.params.tno;
+		console.log(this.$route.params);
 	}
 }
 </script>

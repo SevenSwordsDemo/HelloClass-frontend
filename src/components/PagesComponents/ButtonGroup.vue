@@ -45,7 +45,7 @@ export default {
 					label: '周三',
 					ifClicked: '',
 					index: 3,
-					value: 'Wedneday'
+					value: 'Wednesday'
 				},
 				{
 					label: '周四',
@@ -93,12 +93,12 @@ export default {
 			}
 		},
 		//获得点击按钮索引、值
-		getButtonIndex (index, value) {
+		getButtonIndex (index, theday) {
 			this.checkButtonState(index);
-			this.returnTheday(value);
+			this.returnTheday(theday);
 		},
-		returnTheday (value) {
-			this.$emit('getTheday', value);
+		returnTheday (theday) {
+			this.$emit('getTheday', theday);
 		}
 	},
 	mounted () {

@@ -73,6 +73,8 @@ export default {
 		//等待注入数据
 		return {
 			isStudent: false,
+			tno: '',
+			sno: '',
 			userName:'',
 			HomePageW: 0,
 			HomePageH: 0,
@@ -224,7 +226,6 @@ export default {
 		handleSideBar (ifclicked) {
 			this.ifSide = ifclicked;
 			this.ifArray[1] = ifclicked;
-			this.postTest();
 		},
 		//点击侧边栏内导航按钮时
 		//检查所有页面状态，并将传入的index对应页面状态修改,
@@ -270,9 +271,9 @@ export default {
 		// 		console.log(body.data)
 		// 	})
 		// },
-		postTest () {
-			postCourseInfo();
-		},	
+		// postTest () {
+		// 	postCourseInfo();
+		// },	
 	},
 	mounted () {
 		this.handOutPageState();

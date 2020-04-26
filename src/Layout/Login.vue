@@ -66,6 +66,7 @@
 
 <script>
 import {LoginCheck} from '../api/login.js'
+
 export default{
 	name: 'Login',
 	props: {
@@ -75,7 +76,7 @@ export default{
 	data() {
 		return {
 			loginform: {
-				userName:'t123465',
+				userName:'t123456',
 				password:'123456',
 				role: '教师',
 			},
@@ -92,25 +93,19 @@ export default{
 				console.log(valid)
 				if(!valid) 
 					return;
-				const {data:res} = await this.$axios.request({
-					method: 'post',
-					url: 'api/loginCheck',
-					data: {
-						userName: this.loginform.userName,
-						password: this.loginform.password,
-						role: this.loginform.role
-					},
-				})
+				const {data:res} = await LoginCheck(this.loginform);
 				console.log(res);
 				if(res.status !== 200) 
-					return this.$message.error('登陆失败')
-				
-				// window.sessionStorage.setItem('token', res.data.token);
-				
+					return this.$message.error('登陆失败');
 				this.$router.push({
 					path: "/homepage",
 					name: "homepage",
-					params: res
+					params: {
+						username: res.data.name,
+						role: this.loginform.role,
+						HomePageW: this.HomePageW,
+						HomePageH: this.HomePageH
+					}
 				});
 				this.$message.success('登陆成功');
 			});

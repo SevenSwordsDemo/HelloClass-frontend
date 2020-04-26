@@ -27,10 +27,10 @@ export default {
 	  return {
 		  screenWidth: document.documentElement.clientWidth,
 		  screenHeight: document.documentElement.clientHeight,
-		  // 用户身份，学生/老师，需要后端发送
-		  isStudent: true,
-		  // 用户姓名
-		  userName: '龙傲天'
+		//   // 用户身份，学生/老师，需要后端发送
+		//   isStudent: true,
+		//   // 用户姓名
+		//   userName: '龙傲天'
 	  }
 	},
 	methods: {

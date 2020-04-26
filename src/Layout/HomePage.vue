@@ -15,7 +15,7 @@
 			v-if="ifClassInfo"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
-			:pageName="ClassInfoName"
+			:pageName="PageNames[0]"
 			:tableInfo="ClassTableInfo"
 			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
@@ -24,7 +24,7 @@
 			v-if="ifCourseInfo"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
-			:pageName="CourseInfoName"
+			:pageName="PageNames[1]"
 			:tableInfo="CourseTableInfo"
 			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
@@ -33,13 +33,13 @@
 			v-if="ifRecord"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
-			:pageName="AtdRecordName"
+			:pageName="PageNames[2]"
 			:Students="Students"
 			:Records="Records"/>
 		<!-- 学生申请教室 -->
 		<ApplyRoomPage 
 			v-if="ifApply"
-			:pageName="ApplyRoomName"
+			:pageName="PageNames[3]"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"/>
 		<!-- 侧边栏 -->
@@ -69,15 +69,13 @@ export default {
 		AtdRecordPage,
 		ApplyRoomPage
 	},
-	props: {
-		HomePageW: Number,
-		HomePageH: Number,
-		isStudent: Boolean,
-		userName: String
-	},
 	data () {
 		//等待注入数据
 		return {
+			isStudent: false,
+			userName:'',
+			HomePageW: 0,
+			HomePageH: 0,
 			ifArray: [true, false, false, false, false, false], //ifArray储存所有页面的v-if指令
 			ifHome: '',
 			ifSide: '',
@@ -85,11 +83,7 @@ export default {
 			ifCourseInfo: '',
 			ifRecord: '',
 			ifApply: '',
-			PageNames: [],
-			ClassInfoName: "教室情况查询",
-			CourseInfoName: "任课信息查询",
-			AtdRecordName: "签到记录查询",
-			ApplyRoomName: "申请教室",
+			PageNames: ["教室情况查询", "任课信息查询", "签到记录查询", "申请教室"],
 			ClassTableInfo: [
 				{
 					address: "健B110",
@@ -282,7 +276,10 @@ export default {
 	},
 	mounted () {
 		this.handOutPageState();
-		console.log(this.$route.params.data);
+		this.isStudent = (this.$route.params.role === "学生") ? true : false;
+		this.userName = this.$route.params.username;
+		this.HomePageW = this.$route.params.HomePageW;
+		this.HomePageH = this.$route.params.HomePageH;
 	}
 }
 </script>

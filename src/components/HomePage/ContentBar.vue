@@ -5,8 +5,9 @@
 			:userName = "userName"/>
 		<div class="ContentArea">
 			<CourseBrowse
-				v-for="item in bars" 
-				:Data="item"/>
+				v-for="(item,index) in bars" 
+				:key="index"
+				:showData="item"/>
 		</div>
 	</div>
 </template>
@@ -27,11 +28,11 @@ export default {
 	},
 	data () {
 		return {
-			//等待注入数据
+			//等待注入数据，需要判断角色
 			bars: [
 				{
 					Title: '任课速览',
-					childrenData: [
+					Data: [
 						{
 							courseName: '英语课',
 							weekDay: '星期日',
@@ -45,8 +46,8 @@ export default {
 					]
 				},
 				{
-					Title: '后续内容待补充',
-					Data: []
+					Title: '查看申请进度',
+					Data: this.$route.params.applyStates
 				}
 			],
 		}

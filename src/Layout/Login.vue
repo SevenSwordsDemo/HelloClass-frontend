@@ -35,7 +35,7 @@
 						<el-form-item prop="role">
 							<el-select v-model="loginform.role" placeholder="请选择">
 								<el-option label="学生" value="学生"></el-option>
-								<el-option label="老师" value="老师"></el-option>
+								<el-option label="教师" value="教师"></el-option>
 								<el-option label="管理员" value="管理员"></el-option>
 							</el-select>
 						</el-form-item>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {LoginCheck} from '../api/login.js'
+import {LoginCheck, getApplyState, translateApplyState} from '../api/login.js'
 
 export default{
 	name: 'Login',
@@ -79,10 +79,13 @@ export default{
 				userName:'t123456',
 				password:'123456',
 				role: '教师',
+				// userName:'2019269410431',
+				// password:'69410431',
+				// role: '学生',
 			},
 			rules: {
-				userName: [{ required:true,message:"请输入账号",tigger:'blur'}, { min: 3, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur' }],
-				password: [{ required:true,message:"请输入密码",tigger:'blur'}, { min: 3, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur' }],
+				userName: [{ required:true,message:"请输入账号",tigger:'blur'}, { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }],
+				password: [{ required:true,message:"请输入密码",tigger:'blur'}, { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }],
 				role: [{ required:true,message:"请输选择角色",tigger:'blur'}],
 			}	
 		}
@@ -96,7 +99,12 @@ export default{
 				const {data:res} = await LoginCheck(this.loginform);
 				console.log(res);
 				if(res.status !== 200) 
-					return this.$message.error('登陆失败');
+					return this.$message.error('登陆失败');			
+				this.$message.success('登陆成功');
+				//登录成功后获取学生申请教室情况，并处理申请情况数组
+				const {data:applyState} = await getApplyState(res.data.id);
+				let states = translateApplyState(applyState.data);
+				//通过路由发送数据
 				this.$router.push({
 					path: "/homepage",
 					name: "homepage",
@@ -106,10 +114,11 @@ export default{
 						tno: res.data.tno,
 						sno: res.data.sno,
 						HomePageW: this.HomePageW,
-						HomePageH: this.HomePageH
+						HomePageH: this.HomePageH,
+						id: res.data.id,
+						applyStates: states
 					}
 				});
-				this.$message.success('登陆成功');
 			});
 		}
 	},

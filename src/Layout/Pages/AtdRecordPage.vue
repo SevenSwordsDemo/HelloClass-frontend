@@ -10,7 +10,7 @@
 				:ParentH="ParentH"
 				@getTheday="getTheday"/>
 			<RecordTable 
-				:Students="Students"
+				:students="students"
 				:Records="Records"
 				:getWeek="getWeek"/>
 		</div>
@@ -34,13 +34,12 @@ export default {
 		ParentW: Number,
 		ParentH: Number,
 		pageName: String,
-		tableInfo: Array,
-		Students: Array,
-		Records: Array
 	},
 	data () {
 		return {
 			heightRate: 0.833,
+			Records: [],
+			students: [],
 			//传后端数据
 			week: 0,
 			theday: 0,
@@ -58,13 +57,19 @@ export default {
 			this.week = week;
 			this.returnWeek();
 		},
-		//返回星期
+		//返回星期，并获取签到记录
 		returnTheday () {
-			postAtdRecord(this.tno, this.week, this.theday);
+			const res = postAtdRecord(this.tno, this.week, this.theday).then(value => {
+				this.Records = value.simpleArr;
+				this.students = value.notSignArr
+			})
 		},
-		//返回周次
+		//返回周次，并获取签到记录
 		returnWeek () {
-			postAtdRecord(this.tno, this.week, this.theday);
+			const res = postAtdRecord(this.tno, this.week, this.theday).then(value => {
+				this.Records = value.simpleArr;
+				this.students = value.notSignArr
+			})
 		}
 	},
 	mounted () {

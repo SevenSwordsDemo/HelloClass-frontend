@@ -4,7 +4,8 @@
 			<table class="Table">
 				<tr>
 					<td
-						v-for="item in items">
+						v-for="(item, index) in items"
+						:key="index">
 						{{item}}
 					</td>
 				</tr>
@@ -22,9 +23,11 @@
 			</tr>
 			<tr
 				class="stuList"
-				v-for="stubar in stus">
+				v-for="(stubar, index) in students"
+				:key="index">
 				<td
-					v-for="stu in stubar">
+					v-for="(stu,index) in stubar"
+					:key="index">
 					{{stu}}
 				</td>
 			</tr>
@@ -43,8 +46,7 @@ export default {
 	data () {
 		return {
 			ifExtend: false,
-			items: this.Items,
-			stus: this.students
+			items: this.Items
 		}
 	},
 	computed: {

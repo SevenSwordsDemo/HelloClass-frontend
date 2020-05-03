@@ -10,7 +10,7 @@
 			v-if="ifHome"
 			:isStudent="isStudent"
 			:userName="userName" />
-		<!-- 教室信息查询 -->
+		<!-- 教室信息查询  教师、学生可用-->
 		<InfoPage 
 			v-if="ifClassInfo"
 			:ParentW="HomePageW"
@@ -19,24 +19,21 @@
 			:tableInfo="ClassTableInfo"
 			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
-		<!-- 任课信息查询 -->
+		<!-- 任课信息查询  教师可用-->
 		<InfoPage 
 			v-if="ifCourseInfo"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
 			:pageName="PageNames[1]"
-			:tableInfo="CourseTableInfo"
 			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
-		<!-- 签到记录查询 -->
+		<!-- 签到记录查询  教师可用-->
 		<AtdRecordPage 
 			v-if="ifRecord"
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
-			:pageName="PageNames[2]"
-			:Students="Students"
-			:Records="Records"/>
-		<!-- 学生申请教室 -->
+			:pageName="PageNames[2]"/>
+		<!-- 学生申请教室 学生可用-->
 		<ApplyRoomPage 
 			v-if="ifApply"
 			:pageName="PageNames[3]"
@@ -46,7 +43,8 @@
 		<SidePage 
 			v-show="ifSide" 
 			@func="handleSideBar"
-			@getPageIndex="getPageIndex"/>
+			@getPageIndex="getPageIndex"
+			:isStudent="isStudent"/>
 	</div>
 </template>
 
@@ -100,86 +98,6 @@ export default {
 					user: '龙傲天'
 				},
 			],
-			CourseTableInfo: [
-				{
-					course: "高数",
-					address: "郁B210",
-					classTime: 4,
-					studentNumber: 50
-				},
-				{
-					course: "C++",
-					address: "博C507",
-					classTime: 8,
-					studentNumber: 60
-				},
-				{
-					course: "Java",
-					address: "博C508",
-					classTime: 6,
-					studentNumber: 48
-				},
-				{
-					course: "C++",
-					address: "博C507",
-					classTime: 8,
-					studentNumber: 60
-				},
-				{
-					course: "英语",
-					address: "致远207",
-					classTime: 10,
-					studentNumber: 32
-				},
-				{
-					course: "web",
-					address: "博C307",
-					classTime: 8,
-					studentNumber: 60
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				},
-				{
-					course: "游戏设计",
-					address: "郁B210",
-					classTime: 6,
-					studentNumber: 40
-				}
-			],
 			BuildingInfo: [
 				{
 					value: '健行',
@@ -202,23 +120,6 @@ export default {
 					label: '语林楼'
 				}
 			],
-			Students: [
-				['张三', '李四', '王五', '赵六', '黄七'],
-				['钱八', '', '', '', '']
-			],
-			Records: [
-				{
-					courseName: '高数',
-					address: '博C507',
-					studentNumber: '到课48人',
-				},
-				{
-					courseName: '英语',
-					address: '致远B210',
-					studentNumber: '到课40人',
-				}
-				
-			]
 		}
 	},	
 	methods: {
@@ -249,31 +150,7 @@ export default {
 		//获取点击页面的索引
 		getPageIndex (index) {
 			this.checkPageState(index);
-		},
-		//传送数据测试
-		// postTest () {
-		// 	this.$axios.request({
-		// 		method: 'post',
-		// 		url: '/api/student/apply',
-		// 		data: {
-		// 			sid: "1",
-		// 			classroom: "健b",
-		// 			start: 1,
-		// 			end : 2,
-		// 			state: "待审核",
-		// 			reason: "xxxx",
-		// 			applyTime: "2020-04-23 13:52:00",
-		// 			dayOfWeek: "Monday",
-		// 			date: "2020-04-23",
-		// 			week: 3
-		// 		}
-		// 	}).then(body => {
-		// 		console.log(body.data)
-		// 	})
-		// },
-		// postTest () {
-		// 	postCourseInfo();
-		// },	
+		}
 	},
 	mounted () {
 		this.handOutPageState();

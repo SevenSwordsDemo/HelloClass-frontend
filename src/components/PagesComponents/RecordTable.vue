@@ -20,9 +20,9 @@
 		</div>
 		<div id="tableSign">
 			<AtdRecord
-				v-for="record in records"
+				v-for="(record, index) in Records"
 				:key="record.courseName"
-				:students="Students"
+				:students="students[index]"
 				:Items="record"
 				@handleExtend="handleExtend"/>
 		</div>
@@ -38,7 +38,7 @@ export default {
 		AtdRecord
 	},
 	props: {
-		Students: Array,
+		students: Array,
 		Records: Array,
 		getWeek: Function
 	},
@@ -63,19 +63,20 @@ export default {
 					label: "第四周"
 				}
 			],
-			records: this.Records,
 			signHeight: 0
 		}
 	},
 	computed: {
 		ifOverflow () {
-			if(this.signHeight < 620 && this.Records.length < 16) {
+			if(this.Records != null) {
+				if(this.signHeight < 620 && this.Records.length < 16) {
 				console.log("not overflow" + ' ' + this.Records.length + ' ' + this.signHeight);
 				return {height: '650px'};
-			}
-			else {
-				console.log("overflow" + this.Records.length);
-				return {};
+				}
+				else {
+					console.log("overflow" + this.Records.length);
+					return {};
+				}
 			}
 		}
 	},

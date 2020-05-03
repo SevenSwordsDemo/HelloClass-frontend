@@ -1,18 +1,32 @@
 <template>
 	<div id="CourseBrowse">
 		<p>
-			{{Data.Title}}
+			{{showData.Title}}
 		</p>
-		<table class="CourseInfo"
-				cellspacing="1px">
-			<tr v-for="item,index in items" 
+		<table
+			class="CourseInfo"
+			cellspacing="1px"
+			v-if="ifCourses">
+			<tr
+				v-for="(item,index) in items" 
 				:key="index"
 				:class="[judgeParity(index) ? 'odd' : 'even']">
-				<th v-for="value in item">
+				<th 
+					v-for="(value,index) in item"
+					:key="index">
 					{{value}}
 				</th>
 			</tr>
 		</table>
+		<div 
+			v-if="ifApplyState">
+			<p
+				v-for="(state, index) in items"
+				:key="index">
+				{{state}}
+			</p>
+		</div>
+		
 	</div>
 </template>
 
@@ -21,11 +35,13 @@
 export default {
 	name: 'CourseBrowse',
 	props: {
-		Data: Object
+		showData: Object
 	},
 	data () {
 		return {
-			items: []
+			items: [],
+			ifCourses: false,
+			ifApplyState: true
 		}
 	},
 	methods: {
@@ -39,7 +55,10 @@ export default {
 		}
 	},
 	mounted () {
-		this.items = this.Data.childrenData;
+		this.items = this.showData.Data;
+		if(this.showData.Title === "任课速览")
+			this.ifCourses = true;
+		this.ifApplyState = !this.ifCourses;
 	}
 }
 </script>

@@ -43,7 +43,7 @@
 					</el-option>
 				</el-select>
 			</div>
-			<InfoTable :tableInfo="translatedData"/>
+			<InfoTable :tableInfo="tableInfo"/>
 		</div>
 		
 	</div>
@@ -53,7 +53,7 @@
 import PagesHeader from '../../components/PagesComponents/PagesHeader.vue'	
 import ButtonGroup from '../../components/PagesComponents/ButtonGroup.vue'
 import InfoTable from '../../components/PagesComponents/InfoTable.vue'
-import {postClassInfo, postCourseInfo, dataTranslate} from '../../api/infoAPI.js'
+import {postClassInfo, postCourseInfo, dealCourseInfo} from '../../api/infoAPI.js'
 
 export default {
 	name: 'InfoPage',
@@ -66,7 +66,6 @@ export default {
 		ParentW: Number,
 		ParentH: Number,
 		pageName: String,
-		tableInfo: Array,
 		buildingInfo: Array,
 		ifClass: Boolean,
 	},
@@ -75,6 +74,7 @@ export default {
 			tno: '',
 			heightRate: 0.883,
 			buildings: this.buildingInfo,
+			tableInfo: [],
 			weeks: [
 				{
 					value: 1,
@@ -96,6 +96,7 @@ export default {
 			contentHeight: 0,
 			buildingvalue: '',
 			weekvalue: '',
+			CourseInfo: [],
 			//传入后台参数
 			week: 0, //周次
 			theday: 0,//星期几
@@ -108,9 +109,6 @@ export default {
 				return {height: '710px'};
 			else
 				return {};
-		},
-		translatedData () {
-			return dataTranslate(this.tableInfo);
 		}
 	},
 	methods: {
@@ -125,23 +123,25 @@ export default {
 		//获取周次返回值
 		getWeek (week) {
 			this.week = week;
-			this.returnClassData();
+			this.getClassData();
 		},
 		//获取星期
 		getTheday (theday) {
 			this.theday = theday;
 			if(this.ifClass)
-				this.returnClassData();
+				this.getClassData();
 			else
-				this.returnCourseData();
+				this.getCourseData();
 		},
-		//返回教室信息
-		returnClassData () {
+		//获得教室信息
+		getClassData () {
 			postClassInfo(this.week, this.theday);
 		},
-		//返回任课信息
-		returnCourseData () {
-			postCourseInfo(this.tno, this.theday);
+		//获得任课信息
+		getCourseData () {
+			const res = postCourseInfo(this.tno, this.theday).then(value => {
+				this.tableInfo = value;
+			});
 		}
 	},
 	mounted () {

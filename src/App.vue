@@ -6,10 +6,9 @@
 			:HomePageH="screenHeight">
 			
 		</router-view>
-		<!-- <HomePage :HomePageW="screenWidth"
-				:HomePageH="screenHeight" 
-				:isStudent="isStudent"
-				:userName="userName"/> -->
+		<!-- <HomePage 
+				:HomePageW="screenWidth"
+				:HomePageH="screenHeight"/> -->
   </div>
 </template>
 

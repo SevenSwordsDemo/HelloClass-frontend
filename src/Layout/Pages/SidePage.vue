@@ -1,7 +1,8 @@
 <template>
 	<div id="SidePage">
 		<SideBar 
-			@changePage="changePage"/>
+			@changePage="changePage"
+			:isStudent="isStudent"/>
 		<button 
 			@click="handleMaskClicked">
 		</button>
@@ -23,6 +24,9 @@ export default {
 		changePage (index) {
 			this.$emit('getPageIndex', index)
 		}
+	},
+	props: {
+		isStudent: Boolean
 	}
 }
 </script>

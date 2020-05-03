@@ -1,10 +1,12 @@
 <template>
 	<table id="InfoTable">
 		<tr 
-			v-for="item in tableInfo"
+			v-for="(item, index) in tableInfo"
+			:key="index"
 			:class="[blueOrRed(item.isAppointed) ? 'isred' : 'isblue']">
 			<td 
-				v-for="value in item"
+				v-for="(value, index) in item"
+				:key="index"
 				:style="{fontSize: fontsize + 'px'}">
 				{{value}}
 			</td>
@@ -33,7 +35,7 @@ export default {
 				fontsize = 12;
 			}
 			else {
-				fontsize = 30;
+				fontsize = 25;
 			}
 			return fontsize;
 		},

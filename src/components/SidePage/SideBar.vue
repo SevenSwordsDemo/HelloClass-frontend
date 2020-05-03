@@ -4,29 +4,40 @@
 			<span>七剑下天山</span>
 		</div>
 		<el-menu
-		  class="el-menu"
-		  @open="handleOpen"
-		  @close="handleClose"
-		  @select="changePage"
-		  background-color="#545c64"
-		  text-color="#fff"
-		  active-text-color="#ffd04b">
-		  <el-menu-item class="el-menu-item" index="1">
+			class="el-menu"
+			@open="handleOpen"
+			@close="handleClose"
+			@select="changePage"
+			background-color="#545c64"
+			text-color="#fff"
+			active-text-color="#ffd04b">
+			<el-menu-item
+		  		class="el-menu-item"
+				index="1">
 				<i class="el-icon-location-information"></i>
 				<span slot="title">教室情况</span>
-		  </el-menu-item>
-		  <el-menu-item class="el-menu-item" index="2">
-			<i class="el-icon-document"></i>
-			<span slot="title">任课信息</span>
-		  </el-menu-item>
-		  <el-menu-item class="el-menu-item" index="3">
-			<i class="el-icon-notebook-1"></i>
-			<span slot="title">签到记录</span>
-		  </el-menu-item>
-		  <el-menu-item class="el-menu-item" index="4">
-			<i class="el-icon-document-checked"></i>
-			<span slot="title">申请教室</span>
-		  </el-menu-item>
+			</el-menu-item>
+			<el-menu-item 
+				class="el-menu-item"
+				index="2"
+				v-if="!isStudent">
+				<i class="el-icon-document"></i>
+				<span slot="title">任课信息</span>
+			</el-menu-item>
+			<el-menu-item 
+				class="el-menu-item" 
+				index="3"
+				v-if="!isStudent">
+				<i class="el-icon-notebook-1"></i>
+				<span slot="title">签到记录</span>
+			</el-menu-item>
+			<el-menu-item 
+				class="el-menu-item" 
+				index="4"
+				v-if="isStudent">
+				<i class="el-icon-document-checked"></i>
+				<span slot="title">申请教室</span>
+			</el-menu-item>
 		</el-menu>
 
 	</div>
@@ -46,6 +57,9 @@ export default {
 			var index = parseInt(key) + 1;
 			this.$emit('changePage', index);
 		}
+	},
+	props: {
+		isStudent: Boolean
 	}
 }
 </script>

@@ -5,8 +5,7 @@
 		</p>
 		<table
 			class="CourseInfo"
-			cellspacing="1px"
-			v-if="ifCourses">
+			cellspacing="1px">
 			<tr
 				v-for="(item,index) in items" 
 				:key="index"
@@ -18,15 +17,6 @@
 				</th>
 			</tr>
 		</table>
-		<div 
-			v-if="ifApplyState">
-			<p
-				v-for="(state, index) in items"
-				:key="index">
-				{{state}}
-			</p>
-		</div>
-		
 	</div>
 </template>
 
@@ -45,6 +35,7 @@ export default {
 		}
 	},
 	methods: {
+		//根据单复数行赋值颜色
 		judgeParity ( index ) {
 			if(index % 2 != 0){
 				return true;

@@ -70,11 +70,9 @@ export default {
 		ifOverflow () {
 			if(this.Records != null) {
 				if(this.signHeight < 620 && this.Records.length < 16) {
-				console.log("not overflow" + ' ' + this.Records.length + ' ' + this.signHeight);
 				return {height: '650px'};
 				}
 				else {
-					console.log("overflow" + this.Records.length);
 					return {};
 				}
 			}

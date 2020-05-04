@@ -44,9 +44,17 @@ export function getApplyState (sid) {
  * 处理登录返回数据
  */
 export function translateApplyState (array) {
+	//返回 教室、日期、第几节课、状态
 	var states = [];
+	console.log(array);
 	array.forEach((element,index) => {
-		states[index] = element.state;
+		states[index] = {
+			classroom: element.classroom,
+			date: element.date,
+			time: "第" + element.start + "~" + element.end + "节课",
+			state: element.state
+		}
 	});
+	console.log(states);
 	return states;
 }

@@ -18,7 +18,8 @@
 				:style="{fontSize: buttonLength}">
 			</i>
 		</button>
-		<span
+		<button
+			@click="turnbackHome"
 			class="UserIcon"
 			:style="{
 				width: userLength,
@@ -29,9 +30,8 @@
 			<i
 				class="el-icon-user-solid"
 				:style="{fontSize: userLength}">
-				
 			</i>
-		</span>
+		</button>
 	</div>
 </template>
 
@@ -66,7 +66,10 @@ export default {
 	},
 	methods: {
 		handleClickSideButton() {
-			this.$emit('func', true);
+			this.$emit('handleSideBar', true);
+		},
+		turnbackHome () {
+			this.$emit('handleHome');
 		}
 	}
 }
@@ -82,6 +85,8 @@ export default {
 	}
 	.UserIcon {
 		position: absolute;
+		padding: 0;
+		border: 0;
 		opacity: 0.9;
 		border-radius: 100%;
 		background: #EEEBEB 100%;

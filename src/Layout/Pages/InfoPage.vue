@@ -53,7 +53,7 @@
 import PagesHeader from '../../components/PagesComponents/PagesHeader.vue'	
 import ButtonGroup from '../../components/PagesComponents/ButtonGroup.vue'
 import InfoTable from '../../components/PagesComponents/InfoTable.vue'
-import {postClassInfo, postCourseInfo, dealCourseInfo} from '../../api/infoAPI.js'
+import {postClassInfo, postCourseInfo, postBuilding} from '../../api/infoAPI.js'
 
 export default {
 	name: 'InfoPage',
@@ -66,14 +66,12 @@ export default {
 		ParentW: Number,
 		ParentH: Number,
 		pageName: String,
-		buildingInfo: Array,
 		ifClass: Boolean,
 	},
 	data () {
 		return {
 			tno: '',
 			heightRate: 0.883,
-			buildings: this.buildingInfo,
 			tableInfo: [],
 			weeks: [
 				{
@@ -93,10 +91,31 @@ export default {
 					label: '第一周'
 				}
 			],
+			buildings: [
+				{
+					value: '健行',
+					label: '健行楼'
+				}, 
+				{
+					value: '广知',
+					label: '广知楼'
+				}, 
+				{
+					value: '博易',
+					label: '博易楼'
+				}, 
+				{
+					value: '郁文',
+					label: '郁文楼'
+				}, 
+				{
+					value: '语林',
+					label: '语林楼'
+				}
+			],
 			contentHeight: 0,
 			buildingvalue: '',
 			weekvalue: '',
-			CourseInfo: [],
 			//传入后台参数
 			week: 0, //周次
 			theday: 0,//星期几
@@ -119,6 +138,7 @@ export default {
 		//获取楼名返回值
 		getBuilding (build) {
 			this.build = build;
+			this.chooseByBuilding(this.week, this.theday, this.build)
 		},
 		//获取周次返回值
 		getWeek (week) {
@@ -135,13 +155,21 @@ export default {
 		},
 		//获得教室信息
 		getClassData () {
-			postClassInfo(this.week, this.theday);
+			const res = postClassInfo(this.week, this.theday).then(value => {
+				this.tableInfo = value;
+			});
 		},
 		//获得任课信息
 		getCourseData () {
 			const res = postCourseInfo(this.tno, this.theday).then(value => {
 				this.tableInfo = value;
 			});
+		},
+		//按楼名过滤
+		chooseByBuilding (week, theday, build) {
+			const res = postBuilding(week, theday, build).then(value => {
+				this.tableInfo = value;
+			})
 		}
 	},
 	mounted () {

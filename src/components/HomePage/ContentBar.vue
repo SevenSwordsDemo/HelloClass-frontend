@@ -51,6 +51,11 @@ export default {
 				}
 			],
 		}
+	},
+	methods: {
+		ifOverflow () {
+
+		}
 	}
 }
 </script>
@@ -58,10 +63,10 @@ export default {
 <style lang="less">
 #ContentBar {
 	width: 78%;
-	height: 78%;
-	position: absolute;
+	// height: 78%;
+	position: relative;
 	left: 11%;
-	top: 16.5%;
+	top: 50px;
 	background: white;
 	border-radius: 10px;
 	line-height: 20px;

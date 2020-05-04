@@ -1,10 +1,13 @@
 <template>
-	<div id="HomePage">
+	<div 
+		id="HomePage"
+		:style="{height: fitHeight}">
 		<!-- 主页页头 -->
 		<Header 
 			:ParentW="HomePageW"
 			:ParentH="HomePageH" 
-			@func="handleSideBar" />
+			@handleSideBar="handleSideBar"
+			@handleHome="handleHome" />
 		<!-- 主页内容区 -->
 		<ContentBar 
 			v-if="ifHome"
@@ -16,8 +19,6 @@
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
 			:pageName="PageNames[0]"
-			:tableInfo="ClassTableInfo"
-			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
 		<!-- 任课信息查询  教师可用-->
 		<InfoPage 
@@ -25,7 +26,6 @@
 			:ParentW="HomePageW"
 			:ParentH="HomePageH"
 			:pageName="PageNames[1]"
-			:buildingInfo="BuildingInfo"
 			:ifClass="ifClassInfo"/>
 		<!-- 签到记录查询  教师可用-->
 		<AtdRecordPage 
@@ -55,7 +55,6 @@ import SidePage from './Pages/SidePage.vue'
 import InfoPage from './Pages/InfoPage.vue'
 import AtdRecordPage from './Pages/AtdRecordPage.vue'
 import ApplyRoomPage from './Pages/ApplyRoomPage.vue'
-import {postCourseInfo} from '../api/infoAPI.js'
 
 export default {
 	name: 'HomePage',
@@ -68,12 +67,11 @@ export default {
 		ApplyRoomPage
 	},
 	data () {
-		//等待注入数据
 		return {
 			isStudent: false,
 			tno: '',
 			sno: '',
-			userName:'',
+			userName: '',
 			HomePageW: 0,
 			HomePageH: 0,
 			ifArray: [true, false, false, false, false, false], //ifArray储存所有页面的v-if指令
@@ -84,42 +82,6 @@ export default {
 			ifRecord: '',
 			ifApply: '',
 			PageNames: ["教室情况查询", "任课信息查询", "签到记录查询", "申请教室"],
-			ClassTableInfo: [
-				{
-					address: "健B110",
-					classTime: 1,
-					isAppointed: true,
-					user: '凤弱地'
-				},
-				{
-					address: "广C201",
-					classTime: 5,
-					isAppointed: false,
-					user: '龙傲天'
-				},
-			],
-			BuildingInfo: [
-				{
-					value: '健行',
-					label: '健行楼'
-				}, 
-				{
-					value: '广知',
-					label: '广知楼'
-				}, 
-				{
-					value: '博易',
-					label: '博易楼'
-				}, 
-				{
-					value: '郁文',
-					label: '郁文楼'
-				}, 
-				{
-					value: '语林',
-					label: '语林楼'
-				}
-			],
 		}
 	},	
 	methods: {
@@ -127,6 +89,10 @@ export default {
 		handleSideBar (ifclicked) {
 			this.ifSide = ifclicked;
 			this.ifArray[1] = ifclicked;
+		},
+		//接受头像点击，返回主页事件
+		handleHome () {
+			this.checkPageState(0);
 		},
 		//点击侧边栏内导航按钮时
 		//检查所有页面状态，并将传入的index对应页面状态修改,
@@ -150,6 +116,15 @@ export default {
 		//获取点击页面的索引
 		getPageIndex (index) {
 			this.checkPageState(index);
+		},
+	},
+	computed: {
+		//自适应长度
+		fitHeight () {
+			var header = document.querySelector("div[id='Header']");
+			var contentBar = document.querySelector("div[id='ContentBar']");
+			var fitheight = (header.offsetHeight + contentBar.offsetHeight + 80) + 'px'
+			return fitheight;
 		}
 	},
 	mounted () {

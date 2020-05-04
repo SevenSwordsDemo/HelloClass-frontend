@@ -46,7 +46,6 @@ export function getApplyState (sid) {
 export function translateApplyState (array) {
 	//返回 教室、日期、第几节课、状态
 	var states = [];
-	console.log(array);
 	array.forEach((element,index) => {
 		states[index] = {
 			classroom: element.classroom,
@@ -55,6 +54,5 @@ export function translateApplyState (array) {
 			state: element.state
 		}
 	});
-	console.log(states);
 	return states;
 }

@@ -1,7 +1,7 @@
 <template>
 	<div 
 		id="HomePage"
-		:style="{height: fitHeight}">
+		:style="{height: homeHeight}">
 		<!-- 主页页头 -->
 		<Header 
 			:ParentW="HomePageW"
@@ -12,7 +12,7 @@
 		<ContentBar 
 			v-if="ifHome"
 			:isStudent="isStudent"
-			:userName="userName" />
+			:userName="userName"/>
 		<!-- 教室信息查询  教师、学生可用-->
 		<InfoPage 
 			v-if="ifClassInfo"
@@ -82,6 +82,7 @@ export default {
 			ifRecord: '',
 			ifApply: '',
 			PageNames: ["教室情况查询", "任课信息查询", "签到记录查询", "申请教室"],
+			homeHeight: ''
 		}
 	},	
 	methods: {
@@ -117,12 +118,11 @@ export default {
 		getPageIndex (index) {
 			this.checkPageState(index);
 		},
-	},
-	computed: {
 		//自适应长度
 		fitHeight () {
 			var header = document.querySelector("div[id='Header']");
 			var contentBar = document.querySelector("div[id='ContentBar']");
+			console.log(header.offsetHeight, contentBar.offsetHeight);
 			var fitheight = (header.offsetHeight + contentBar.offsetHeight + 80) + 'px'
 			return fitheight;
 		}
@@ -133,6 +133,9 @@ export default {
 		this.userName = this.$route.params.username;
 		this.HomePageW = this.$route.params.HomePageW;
 		this.HomePageH = this.$route.params.HomePageH;
+		setTimeout(() => {
+			this.homeHeight = this.fitHeight();
+		}, 100)
 	}
 }
 </script>

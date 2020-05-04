@@ -43,7 +43,7 @@ export default {
 			else{
 				return false;
 			}
-		}
+		},
 	},
 	mounted () {
 		this.items = this.showData.Data;

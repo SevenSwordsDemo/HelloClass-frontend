@@ -51,11 +51,6 @@ export default {
 				}
 			],
 		}
-	},
-	methods: {
-		ifOverflow () {
-
-		}
 	}
 }
 </script>

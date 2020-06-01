@@ -76,9 +76,12 @@ export default{
 	data() {
 		return {
 			loginform: {
-				userName:'t123456',
-				password:'123456',
-				role: '教师',
+				userName:'',
+				password:'',
+				role: '',
+				// userName:'t123456',
+				// password:'123456',
+				// role: '教师',
 				// userName:'2019269410431',
 				// password:'69410431',
 				// role: '学生',
@@ -103,7 +106,10 @@ export default{
 				this.$message.success('登陆成功');
 				//登录成功后获取学生申请教室情况，并处理申请情况数组
 				const {data:applyState} = await getApplyState(res.data.id);
-				let states = translateApplyState(applyState.data);
+				let states = [];
+				if(applyState != null) {
+					states = translateApplyState(applyState.data);
+				}
 				//通过路由发送数据
 				this.$router.push({
 					path: "/homepage",

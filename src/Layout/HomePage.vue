@@ -122,7 +122,6 @@ export default {
 		fitHeight () {
 			var header = document.querySelector("div[id='Header']");
 			var contentBar = document.querySelector("div[id='ContentBar']");
-			console.log(header.offsetHeight, contentBar.offsetHeight);
 			var fitheight = (header.offsetHeight + contentBar.offsetHeight + 80) + 'px'
 			return fitheight;
 		}

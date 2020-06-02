@@ -3,9 +3,19 @@
 		<ContentHeader
 			:isStudent="isStudent" 
 			:userName = "userName"/>
-		<div class="ContentArea">
+		<div
+			v-if="!isStudent" 
+			class="ContentArea">
 			<CourseBrowse
-				v-for="(item,index) in bars" 
+				v-for="(item,index) in teacher_bars" 
+				:key="index"
+				:showData="item"/>
+		</div>
+		<div
+			v-if="isStudent" 
+			class="ContentArea">
+			<CourseBrowse
+				v-for="(item,index) in student_bars" 
 				:key="index"
 				:showData="item"/>
 		</div>
@@ -29,9 +39,26 @@ export default {
 	data () {
 		return {
 			//等待注入数据，需要判断角色
-			bars: [
+			teacher_bars: [
 				{
 					Title: '任课速览',
+					Data: [
+						{
+							courseName: '英语课',
+							weekDay: '星期日',
+							classTime: '第5节课'
+						},
+						{
+							courseName: '数学课',
+							weekDay: '星期六',
+							classTime: '第6节课'
+						}
+					]
+				}
+			],
+			student_bars: [
+				{
+					Title: '上课速览',
 					Data: [
 						{
 							courseName: '英语课',
@@ -49,7 +76,7 @@ export default {
 					Title: '查看申请进度',
 					Data: this.$route.params.applyStates
 				}
-			],
+			]
 		}
 	}
 }
